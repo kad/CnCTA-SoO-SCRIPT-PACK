@@ -1,0 +1,21 @@
+your-caddy-domain.com {
+    reverse_proxy localhost:8000
+
+    header {
+        # Allow CORS
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+        
+        # Handle preflight
+        @options {
+            method OPTIONS
+        }
+        handle @options {
+            header Access-Control-Allow-Origin *
+            header Access-Control-Allow-Methods "GET, POST, OPTIONS"
+            header Access-Control-Allow-Headers "Content-Type, Authorization"
+            respond "" 204
+        }
+    }
+}
